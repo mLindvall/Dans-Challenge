@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application 
+                layout="absolute"
+                xmlns:mx="http://www.adobe.com/2006/mxml">
+  <mx:Script>
+    <![CDATA[
+
+      import com.michaellindvall.danschallenge.util.ChallengeHelper;
+      import mx.collections.HierarchicalData;
+
+      [Bindable]
+      private var _data:HierarchicalData;
+
+      override protected function childrenCreated():void {
+        super.childrenCreated();
+        if (!_data) {
+          _data = new HierarchicalData();
+          var helper:ChallengeHelper = new ChallengeHelper();
+
+          _data.source = helper.poList;
+          _data.childrenField = "items";
+        }
+
+      }
+
+    ]]>
+  </mx:Script>
+  <mx:VBox 
+           width="100%" height="100%">
+    <mx:AdvancedDataGrid 
+                         width="100%" height="100%"
+                         dataProvider="{_data}">
+      <mx:columns>
+
+        <mx:AdvancedDataGridColumn dataField="invoiceNumber"/>
+        <mx:AdvancedDataGridColumn dataField="itemNo"/>
+        <mx:AdvancedDataGridColumn dataField="itemDescription"/>
+        <mx:AdvancedDataGridColumn dataField="componentACount"
+                                   dataTipField="componentAList"
+                                   showDataTips="true"
+                                   itemRenderer="com.michaellindvall.danschallenge.renderer.CustomToolTip"/>
+        <mx:AdvancedDataGridColumn dataField="componentBCount"
+                                   dataTipField="componentBList"
+                                   showDataTips="true"
+                                   itemRenderer="com.michaellindvall.danschallenge.renderer.CustomToolTip"/>
+      </mx:columns>
+
+    </mx:AdvancedDataGrid>
+  </mx:VBox>
+</mx:Application>
